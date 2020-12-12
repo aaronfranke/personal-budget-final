@@ -18,7 +18,7 @@ nav {
 nav ul,
 nav ul li {
 	margin: 0;
-	padding: 0 ;
+	padding: 0;
 	list-style: none;
 	display: inline-block;
 }
@@ -33,7 +33,7 @@ nav ul li a {
 	margin: 0;
 }
 
-nav ul li a:hover  {
+nav ul li a:hover {
 	background-color: white;
 	color: #4d5791;
 }
@@ -120,7 +120,8 @@ main article {
 	header {
 		height: 500px;
 	}
-	header > h1, header > h2 {
+	header > h1,
+	header > h2 {
 		display: block;
 		width: 220px;
 		margin: 20px auto;

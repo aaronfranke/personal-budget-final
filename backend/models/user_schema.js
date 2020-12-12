@@ -14,10 +14,15 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    token: {
+    validTime: {
+		// Any tokens created before this time are considered invalid.
         type: String,
         required: true,
-    },
+	},
+	budgetData: {
+		type: Array,
+		required: true,
+	},
 }, { collection: "users" });
 
 module.exports = mongoose.model("users", userSchema);
