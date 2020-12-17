@@ -9,16 +9,19 @@ function login() {
 	};
 	console.log(JSON.stringify(data));
 	axios.post("http://localhost:4000/api/login", data).then((res) => {
-		document.getElementById("username").value = "";
 		document.getElementById("password").value = "";
 		if (res && res.data) {
 			if (res.data.ok === 1) {
 				reactLocalStorage.set("jwt", res.data.token);
+				reactLocalStorage.set("username", document.getElementById("username").value);
+				window.location.assign("/account");
 			} else {
 				document.getElementById("errorMessage").innerText =
 					res.data.error;
 			}
 		} else {
+			document.getElementById("errorMessage").innerText =
+				"Error: Unknown error.";
 			console.log(res);
 		}
 	});

@@ -22,6 +22,9 @@ const secretKey = "My super secret key";
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
+// This should be increased to 10 in production, but can be lower for testing.
+const MIN_PASSWORD_LENGTH = 3;
+
 app.use((req, res, next) => {
 	res.setHeader("Access-Control-Allow-Origin", `http://localhost:${port}`);
 	res.setHeader("Access-Control-Allow-Origin", `http://localhost:3000`);
@@ -35,7 +38,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post("/api/signup", (req, res) => {
 	const { username, password } = req.body;
 	//console.log(username);
-	// Check the length of the username.
+	// Check the length of the username and password.
 	if (username.length < 3) {
 		res.json({
 			ok: 0,
@@ -43,6 +46,15 @@ app.post("/api/signup", (req, res) => {
 		});
 		return;
 	}
+	if (password.length < MIN_PASSWORD_LENGTH) {
+		res.json({
+			ok: 0,
+			error: "Password too short.",
+		});
+		return;
+	}
+	// The basic checks we can do without the database are done,
+	// so next we need to connect to the database.
 	mongoose
 		.connect(url, connectParams)
 		.then(() => {
@@ -251,6 +263,14 @@ app.post("/api/delete_from_budget", (req, res) => {
 });
 
 app.post("/api/change_password", (req, res) => {
+	// Check the length of the new password.
+	if (req.body.newPassword.length < MIN_PASSWORD_LENGTH) {
+		res.json({
+			ok: 0,
+			error: "Password too short.",
+		});
+		return;
+	}
 	validateToken(req.body.token, res, (user) => {
 		bcrypt.hash(req.body.newPassword, user.salt, function (err, hash) {
 			// Set new hash and update validTime to expire old tokens.

@@ -7,10 +7,13 @@ import {
 import Footer from "./Footer/Footer";
 import Hero from "./Hero/Hero";
 import Menu from "./Menu/Menu";
-
 import HomePage from "./HomePage/HomePage";
+
+import Account from "./Account/Account";
 import Login from "./Account/Login";
 import SignUp from "./Account/SignUp";
+import ChangePassword from "./Account/ChangePassword";
+import DeleteAccount from "./Account/DeleteAccount";
 
 function App() {
 	return (
@@ -24,6 +27,15 @@ function App() {
 					</Route>
 					<Route path="/signup">
 						<SignUp />
+					</Route>
+					<Route path="/account">
+						<Account />
+					</Route>
+					<Route path="/change_password">
+						<ChangePassword />
+					</Route>
+					<Route path="/delete_account">
+						<DeleteAccount />
 					</Route>
 					<Route path="/">
 						<HomePage />

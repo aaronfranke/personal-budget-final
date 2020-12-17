@@ -67,6 +67,7 @@ header h2 {
 main {
 	padding: 40px 10px;
 	width: 100%;
+	min-height: 400px;
 }
 
 main > div {
@@ -155,7 +156,23 @@ main article {
 	margin: 0;
 }
 
+#deleteButton {
+	color: red;
+}
+
+button {
+	margin: 0 10px;
+}
+
 /* Minor page-specific CSS */
+
+#account > div {
+	margin: 10px;
+}
+
+#account > div > button {
+	width: 200px;
+}
 
 #login {
 	width: 400px;
@@ -167,7 +184,7 @@ main article {
 
 #login > div > label {
 	display: inline-block;
-	width: 100px;
+	width: 120px;
 }
 
 #login > div > input {

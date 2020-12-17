@@ -14,15 +14,20 @@ function Menu() {
 		</li>,
 	];
 	if (logged_in) {
+		elements.push(
+			<li key="4">
+				<Link itemProp="url" to="account">
+					Account
+				</Link>
+			</li>
+		);
 	} else {
 		elements.push(
 			<li key="2">
 				<Link itemProp="url" to="login">
 					Login
 				</Link>
-			</li>
-		);
-		elements.push(
+			</li>,
 			<li key="3">
 				<Link itemProp="url" to="signup">
 					Sign Up
