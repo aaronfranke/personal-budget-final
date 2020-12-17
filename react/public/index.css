@@ -69,6 +69,10 @@ main {
 	width: 100%;
 }
 
+main > div {
+	margin: auto;
+}
+
 .page-area {
 	max-width: 768px;
 	display: inline-block;
@@ -143,4 +147,29 @@ main article {
 
 .skip:focus {
 	margin-top: 0;
+}
+
+#errorMessage {
+	color: red;
+	display: inline-block;
+	margin: 0;
+}
+
+/* Minor page-specific CSS */
+
+#login {
+	width: 400px;
+}
+
+#login > div {
+	margin: 10px;
+}
+
+#login > div > label {
+	display: inline-block;
+	width: 100px;
+}
+
+#login > div > input {
+	width: 250px;
 }

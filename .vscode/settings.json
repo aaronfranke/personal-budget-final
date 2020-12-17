@@ -13,12 +13,15 @@
         "instanceof",
         "isnan",
         "linebreak",
+        "localstorage",
         "multiline",
         "nonwords",
         "paren",
         "parens",
         "proto",
+        "reactjs",
         "readonly",
+        "signup",
         "typeof"
     ]
 }

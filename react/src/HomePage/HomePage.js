@@ -3,9 +3,7 @@ import React from "react";
 function HomePage() {
 	return (
 		<main className="center" id="main">
-			<div className="page-area">
-				Home page
-			</div>
+			Home page
 		</main>
 	);
 }

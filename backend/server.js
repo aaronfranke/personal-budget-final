@@ -24,6 +24,7 @@ const saltRounds = 10;
 
 app.use((req, res, next) => {
 	res.setHeader("Access-Control-Allow-Origin", `http://localhost:${port}`);
+	res.setHeader("Access-Control-Allow-Origin", `http://localhost:3000`);
 	res.setHeader("Access-Control-Allow-Headers", "Content-type,Authorization");
 	next();
 });
@@ -33,7 +34,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post("/api/signup", (req, res) => {
 	const { username, password } = req.body;
-	console.log(username);
+	//console.log(username);
+	// Check the length of the username.
+	if (username.length < 3) {
+		res.json({
+			ok: 0,
+			error: "Username too short.",
+		});
+		return;
+	}
 	mongoose
 		.connect(url, connectParams)
 		.then(() => {

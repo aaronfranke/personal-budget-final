@@ -9,6 +9,8 @@ import Hero from "./Hero/Hero";
 import Menu from "./Menu/Menu";
 
 import HomePage from "./HomePage/HomePage";
+import Login from "./Account/Login";
+import SignUp from "./Account/SignUp";
 
 function App() {
 	return (
@@ -17,6 +19,12 @@ function App() {
 			<Hero />
 			<div className="mainContainer">
 				<Switch>
+					<Route path="/login">
+						<Login />
+					</Route>
+					<Route path="/signup">
+						<SignUp />
+					</Route>
 					<Route path="/">
 						<HomePage />
 					</Route>
