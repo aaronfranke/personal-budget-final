@@ -24,6 +24,14 @@ const userSchema = new mongoose.Schema(
 			type: Array,
 			required: true,
 		},
+		income: {
+			type: Number,
+			required: false,
+		},
+		savings: {
+			type: Number,
+			required: false,
+		},
 	},
 	{ collection: "users" }
 );

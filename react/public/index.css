@@ -231,3 +231,15 @@ td {
 #pieChartHolder {
 	max-width: 500px;
 }
+
+.budgetTableBar {
+	padding: 0;
+}
+
+.budgetTableBar > div {
+	height: 32px;
+}
+
+#statisticsHolder {
+	max-width: 500px;
+}

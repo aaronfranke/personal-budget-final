@@ -182,7 +182,8 @@ function validateToken(token, res, callback) {
 							mongoose.connection.close();
 							res.json({
 								ok: 0,
-								error: "Error: Invalid token, please log in again.",
+								error:
+									"Error: Invalid token, please log in again.",
 							});
 							return;
 						}
@@ -209,7 +210,60 @@ app.post("/api/get_budget", (req, res) => {
 		res.json({
 			ok: 1,
 			budgetData: user.budgetData,
+			income: user.income,
+			savings: user.savings,
 		});
+	});
+});
+
+app.post("/api/set_income", (req, res) => {
+	validateToken(req.body.token, res, (user) => {
+		const income = req.body.income;
+		if (income === undefined || income === null) {
+			return;
+		}
+		user.income = income;
+		// Store updated user in DB.
+		userModel
+			.updateOne({ username: user.username }, user, upsert)
+			.then((data) => {
+				mongoose.connection.close();
+				// Respond to the client.
+				res.json({
+					ok: 1,
+					response: "Income set.",
+				});
+				return;
+			})
+			.catch((connectionError) => {
+				console.log(connectionError);
+			});
+	});
+});
+
+app.post("/api/set_savings", (req, res) => {
+	validateToken(req.body.token, res, (user) => {
+		const savings = req.body.savings;
+		if (savings === undefined || savings === null) {
+			return;
+		}
+		user.savings = savings;
+		console.log(savings);
+		// Store updated user in DB.
+		userModel
+			.updateOne({ username: user.username }, user, upsert)
+			.then((data) => {
+				mongoose.connection.close();
+				// Respond to the client.
+				res.json({
+					ok: 1,
+					response: "Savings set.",
+				});
+				return;
+			})
+			.catch((connectionError) => {
+				console.log(connectionError);
+			});
 	});
 });
 
@@ -235,7 +289,8 @@ app.post("/api/add_to_budget", (req, res) => {
 			if (color.length === 6 || color.length === 8) {
 				color = "#" + color;
 			} else if (color.length === 3 || color.length === 4) {
-				color = color.split("")
+				color = color
+					.split("")
 					.map(function (v) {
 						return v + v;
 					})
