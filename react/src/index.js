@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-window.BACKEND_URL = "http://192.168.1.91:4000";
+window.BACKEND_URL = "http://64.225.15.9:4000";
 
 ReactDOM.render(
 	<React.StrictMode>
