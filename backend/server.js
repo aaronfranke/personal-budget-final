@@ -3,6 +3,8 @@ const express = require("express");
 const app = express();
 const port = 4000;
 
+const TOKEN_EXPIRATION_TIME = "1d";
+
 // Mongo*
 let url = "mongodb://localhost:27017/budget";
 const mongoose = require("mongoose");
@@ -83,7 +85,7 @@ app.post("/api/signup", (req, res) => {
 						const token = jwt.sign(
 							{ username: username },
 							secretKey,
-							{ expiresIn: "7d" }
+							{ expiresIn: TOKEN_EXPIRATION_TIME }
 						);
 						// Create new user document.
 						const newUser = new userModel({
@@ -149,7 +151,7 @@ app.post("/api/login", (req, res) => {
 					}
 					// Create a new token for the user.
 					let token = jwt.sign({ username: username }, secretKey, {
-						expiresIn: "7d",
+						expiresIn: TOKEN_EXPIRATION_TIME,
 					});
 					// Give the new token to the client.
 					res.json({ ok: 1, token: token });
@@ -347,7 +349,7 @@ app.post("/api/delete_from_budget", (req, res) => {
 
 app.post("/api/sign_out_all", (req, res) => {
 	validateToken(req.body.token, res, (user) => {
-		user.validTime = Date.now() / 1000;
+		user.validTime = (Date.now() / 1000) - 1;
 		// Store updated user in DB.
 		userModel
 			.updateOne({ username: user.username }, user, upsert)
@@ -379,7 +381,7 @@ app.post("/api/change_password", (req, res) => {
 		bcrypt.hash(req.body.newPassword, user.salt, function (err, hash) {
 			// Set new hash and update validTime to expire old tokens.
 			user.passwordHash = hash;
-			user.validTime = Date.now() / 1000;
+			user.validTime = (Date.now() / 1000) - 1;
 			// Store updated user in DB.
 			userModel
 				.updateOne({ username: user.username }, user, upsert)
