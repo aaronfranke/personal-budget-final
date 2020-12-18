@@ -42,6 +42,48 @@ class Dashboard extends React.Component {
 		});
 	}
 
+	createLineChart(savings, income, budgetData) {
+		let totalBudget = 0;
+		for (let i = 0; i < budgetData.length; i++) {
+			totalBudget += budgetData[i].budget;
+		}
+		const profit = income - totalBudget;
+		const avgMillisecondsInMonth = 2629743768;
+		const currentYear = new Date().getFullYear();
+		const currentMonth = new Date().getMonth() + 1;
+		let timeUntilEndMonths;
+		if (profit > 0) {
+			timeUntilEndMonths = (1000000 - savings) / profit;
+		} else {
+			timeUntilEndMonths = savings / -profit;
+		}
+		let end = new Date();
+		end.setTime(
+			end.getTime() + timeUntilEndMonths * avgMillisecondsInMonth
+		);
+		const endYear = end.getFullYear();
+		const endMonth = end.getMonth() + 1;
+		let dataSource = {
+			labels: [
+				currentYear + "-" + currentMonth,
+				endYear + "-" + endMonth,
+			],
+			datasets: [
+				{
+					label: "Balance Projection",
+					backgroundColor: profit > 0 ? "#ccffcc" : "#ffcccc",
+					data: [savings, profit > 0 ? 1000000 : 0],
+				},
+			],
+		};
+		let context = document.getElementById("lineChart").getContext("2d");
+		// eslint-disable-next-line no-unused-vars
+		let lineChart = new Chart(context, {
+			type: "line",
+			data: dataSource,
+		});
+	}
+
 	getBudget() {
 		const data = {
 			token: reactLocalStorage.get("jwt"),
@@ -58,6 +100,11 @@ class Dashboard extends React.Component {
 						skip: true,
 					});
 					this.createPieChart(res.data.budgetData);
+					this.createLineChart(
+						res.data.savings,
+						res.data.income,
+						res.data.budgetData
+					);
 				} else {
 					const doc = document.getElementById("errorMessage");
 					if (doc) {
@@ -376,6 +423,11 @@ class Dashboard extends React.Component {
 					<div id="statisticsHolder">
 						<h2>Statistics</h2>
 						<p>{statistics}</p>
+						<canvas
+							id="lineChart"
+							width="400"
+							height="400"
+						></canvas>
 					</div>
 
 					<div>

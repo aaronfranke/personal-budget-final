@@ -47,6 +47,7 @@ NodeJS, and it uses Axios to make requests to the backend.
 
 The frontend is built using React, and uses Yarn as its package manager.
 Like the test code, it uses Axios to make requests to the backend.
+The charts are displayed using the Chart.js library.
 
 You can sign up, log in, change your password, sign out from one or all
 devices, delete your account, add budget items, delete budget items,
@@ -55,4 +56,4 @@ and color to use. The color can be in named format (like `red`), or
 hex format, in either 3, 4, 6, or 8 digits, with or without the `#` symbol.
 
 The Dashboard page provides visualizations of your budget data, including
-a bar chart, pie chart, and statistics.
+a bar chart, pie chart, statistics, and a line chart for balance projection.
