@@ -46,12 +46,11 @@ class Dashboard extends React.Component {
 		const data = {
 			token: reactLocalStorage.get("jwt"),
 		};
-		axios.post("http://localhost:4000/api/get_budget", data).then((res) => {
+		axios.post(window.BACKEND_URL + "/api/get_budget", data).then((res) => {
 			if (res && res.data) {
 				if (res.data.ok === 1) {
 					this.income = res.data.income;
 					this.savings = res.data.savings;
-					console.log(this.savings);
 					this.setState({
 						budgetData: res.data.budgetData,
 						income: res.data.income,
@@ -64,6 +63,8 @@ class Dashboard extends React.Component {
 					if (doc) {
 						doc.innerText = res.data.error;
 					} else {
+						reactLocalStorage.remove("jwt");
+						reactLocalStorage.remove("username");
 						document.getElementById("main").innerText =
 							res.data.error;
 					}
@@ -89,7 +90,7 @@ class Dashboard extends React.Component {
 		}
 		// The basic checks we can do without the database are done,
 		// so next we need to connect to the database.
-		axios.post("http://localhost:4000/api/set_income", data).then((res) => {
+		axios.post(window.BACKEND_URL + "/api/set_income", data).then((res) => {
 			if (res && res.data) {
 				if (res.data.ok === 1) {
 					singleton.setState({
@@ -121,7 +122,7 @@ class Dashboard extends React.Component {
 		// The basic checks we can do without the database are done,
 		// so next we need to connect to the database.
 		axios
-			.post("http://localhost:4000/api/set_savings", data)
+			.post(window.BACKEND_URL + "/api/set_savings", data)
 			.then((res) => {
 				if (res && res.data) {
 					if (res.data.ok === 1) {
@@ -161,7 +162,7 @@ class Dashboard extends React.Component {
 		// The basic checks we can do without the database are done,
 		// so next we need to connect to the database.
 		axios
-			.post("http://localhost:4000/api/add_to_budget", data)
+			.post(window.BACKEND_URL + "/api/add_to_budget", data)
 			.then((res) => {
 				if (res && res.data) {
 					if (res.data.ok === 1) {
@@ -187,7 +188,7 @@ class Dashboard extends React.Component {
 			title: title,
 		};
 		axios
-			.post("http://localhost:4000/api/delete_from_budget", data)
+			.post(window.BACKEND_URL + "/api/delete_from_budget", data)
 			.then((res) => {
 				if (res && res.data) {
 					if (res.data.ok === 1) {

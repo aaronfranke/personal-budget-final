@@ -26,8 +26,7 @@ const saltRounds = 10;
 const MIN_PASSWORD_LENGTH = 3;
 
 app.use((req, res, next) => {
-	res.setHeader("Access-Control-Allow-Origin", `http://localhost:${port}`);
-	res.setHeader("Access-Control-Allow-Origin", `http://localhost:3000`);
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	res.setHeader("Access-Control-Allow-Headers", "Content-type,Authorization");
 	next();
 });

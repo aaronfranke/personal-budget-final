@@ -13,7 +13,7 @@ function signOutAll() {
 	const data = {
 		token: reactLocalStorage.get("jwt"),
 	};
-	axios.post("http://localhost:4000/api/sign_out_all", data).then((res) => {
+	axios.post(window.BACKEND_URL + "/api/sign_out_all", data).then((res) => {
 		if (res && res.data) {
 			if (res.data.ok === 1) {
 				reactLocalStorage.remove("jwt");

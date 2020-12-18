@@ -9,7 +9,7 @@ function changePassword() {
 		newPassword: document.getElementById("password").value,
 	};
 	axios
-		.post("http://localhost:4000/api/change_password", data)
+		.post(window.BACKEND_URL + "/api/change_password", data)
 		.then((res) => {
 			document.getElementById("password").value = "";
 			if (res && res.data) {

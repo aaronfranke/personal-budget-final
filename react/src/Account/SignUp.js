@@ -7,7 +7,7 @@ function signUp() {
 		username: document.getElementById("username").value,
 		password: document.getElementById("password").value,
 	};
-	axios.post("http://localhost:4000/api/signup", data).then((res) => {
+	axios.post(window.BACKEND_URL + "/api/signup", data).then((res) => {
 		document.getElementById("password").value = "";
 		if (res && res.data) {
 			if (res.data.ok === 1) {
