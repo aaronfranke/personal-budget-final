@@ -41,7 +41,9 @@ function Account() {
 				</div>
 
 				<div>
-					<button id="deleteButton" onClick={deleteAccount}>Delete Account</button>
+					<button id="deleteButton" onClick={deleteAccount}>
+						Delete Account
+					</button>
 				</div>
 			</div>
 		</main>

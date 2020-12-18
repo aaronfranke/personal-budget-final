@@ -41,14 +41,14 @@ app.post("/api/signup", (req, res) => {
 	if (username.length < 3) {
 		res.json({
 			ok: 0,
-			error: "Username too short.",
+			error: "Error: Username too short.",
 		});
 		return;
 	}
 	if (password.length < MIN_PASSWORD_LENGTH) {
 		res.json({
 			ok: 0,
-			error: "Password too short.",
+			error: "Error: Password too short.",
 		});
 		return;
 	}
@@ -73,7 +73,7 @@ app.post("/api/signup", (req, res) => {
 					mongoose.connection.close();
 					res.json({
 						ok: 0,
-						error: "Username already in use.",
+						error: "Error: Username already in use.",
 					});
 					return;
 				}
@@ -135,7 +135,7 @@ app.post("/api/login", (req, res) => {
 				if (user == null) {
 					res.json({
 						ok: 0,
-						error: "Username not registered.",
+						error: "Error: Username not registered.",
 					});
 					return;
 				}
@@ -144,7 +144,7 @@ app.post("/api/login", (req, res) => {
 					if (hash != user.passwordHash) {
 						res.json({
 							ok: 0,
-							error: "Password is incorrect.",
+							error: "Error: Password is incorrect.",
 						});
 						return;
 					}
@@ -163,6 +163,13 @@ app.post("/api/login", (req, res) => {
 });
 
 function validateToken(token, res, callback) {
+	if (token === undefined || token === null || token.length < 5) {
+		res.json({
+			ok: 0,
+			error: "Error: Invalid token, please log in again.",
+		});
+		return;
+	}
 	try {
 		const data = jwt.verify(token, secretKey);
 		mongoose
@@ -175,7 +182,7 @@ function validateToken(token, res, callback) {
 							mongoose.connection.close();
 							res.json({
 								ok: 0,
-								error: "Invalid token, please log in again.",
+								error: "Error: Invalid token, please log in again.",
 							});
 							return;
 						}
@@ -191,7 +198,7 @@ function validateToken(token, res, callback) {
 		mongoose.connection.close();
 		res.json({
 			ok: 0,
-			error: "Invalid token, please log in again.",
+			error: "Error: Invalid token, please log in again.",
 		});
 	}
 }
@@ -214,16 +221,33 @@ app.post("/api/add_to_budget", (req, res) => {
 				res.json({
 					ok: 0,
 					error:
-						"There is already a budget item with the same title.",
+						"Error: There is already a budget item with the same title.",
 				});
 				return;
+			}
+		}
+		// Handle more cases of colors than HTML/CSS normally does.
+		let color = req.body.color;
+		if (color.startsWith("#")) {
+			color = color.substring(1);
+		}
+		if (/^[A-Fa-f0-9]*$/.test(color)) {
+			if (color.length === 6 || color.length === 8) {
+				color = "#" + color;
+			} else if (color.length === 3 || color.length === 4) {
+				color = color.split("")
+					.map(function (v) {
+						return v + v;
+					})
+					.join("");
+				color = "#" + color;
 			}
 		}
 		// Create new budget document.
 		const newBudget = new chartModel({
 			title: req.body.title,
 			budget: req.body.budget,
-			color: req.body.color,
+			color: color,
 		});
 		user.budgetData.push(newBudget);
 		// Store updated user in DB.
@@ -273,7 +297,7 @@ app.post("/api/change_password", (req, res) => {
 	if (req.body.newPassword.length < MIN_PASSWORD_LENGTH) {
 		res.json({
 			ok: 0,
-			error: "Password too short.",
+			error: "Error: Password too short.",
 		});
 		return;
 	}

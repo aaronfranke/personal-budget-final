@@ -41,7 +41,9 @@ function DeleteAccount() {
 
 				<div>
 					<button onClick={cancel}>Cancel</button>
-					<button id="deleteButton" onClick={deleteAccount}>Confirm Deletion</button>
+					<button id="deleteButton" onClick={deleteAccount}>
+						Confirm Deletion
+					</button>
 				</div>
 
 				<div>

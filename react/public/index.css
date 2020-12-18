@@ -168,7 +168,7 @@ button {
 
 #account > div,
 #dashboard > div {
-	margin: 10px;
+	margin: 10px auto;
 }
 
 #account > div > button {
@@ -226,4 +226,8 @@ td {
 	min-width: 60px;
 	text-align: right;
 	display: inline-block;
+}
+
+#pieChartHolder {
+	max-width: 500px;
 }

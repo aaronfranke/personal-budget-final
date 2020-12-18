@@ -24,7 +24,7 @@ function Menu() {
 				<Link itemProp="url" to="account">
 					Account
 				</Link>
-			</li>,
+			</li>
 		);
 	} else {
 		elements.push(
@@ -37,7 +37,7 @@ function Menu() {
 				<Link itemProp="url" to="signup">
 					Sign Up
 				</Link>
-			</li>,
+			</li>
 		);
 	}
 	return (

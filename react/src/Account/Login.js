@@ -12,7 +12,10 @@ function login() {
 		if (res && res.data) {
 			if (res.data.ok === 1) {
 				reactLocalStorage.set("jwt", res.data.token);
-				reactLocalStorage.set("username", document.getElementById("username").value);
+				reactLocalStorage.set(
+					"username",
+					document.getElementById("username").value
+				);
 				window.location.assign("/account");
 			} else {
 				document.getElementById("errorMessage").innerText =

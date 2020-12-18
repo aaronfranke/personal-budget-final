@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import Chart from "chart.js";
 import { reactLocalStorage } from "reactjs-localstorage";
 //import { useHistory } from "react-router-dom";
 
@@ -15,6 +16,30 @@ class Dashboard extends React.Component {
 		singleton = this;
 	}
 
+	createPieChart(budgetData) {
+		let dataSource = {
+			datasets: [
+				{
+					data: [],
+					backgroundColor: [],
+				},
+			],
+			labels: [],
+		};
+		// Populate the data structure with received values.
+		for (var i = 0; i < budgetData.length; i++) {
+			dataSource.datasets[0].data[i] = budgetData[i].budget;
+			dataSource.datasets[0].backgroundColor[i] = budgetData[i].color;
+			dataSource.labels[i] = budgetData[i].title;
+		}
+		let context = document.getElementById("pieChart").getContext("2d");
+		// eslint-disable-next-line no-unused-vars
+		let pieChart = new Chart(context, {
+			type: "pie",
+			data: dataSource,
+		});
+	}
+
 	getBudget() {
 		const data = {
 			token: reactLocalStorage.get("jwt"),
@@ -26,9 +51,15 @@ class Dashboard extends React.Component {
 						budgetData: res.data.budgetData,
 						skip: true,
 					});
+					this.createPieChart(res.data.budgetData);
 				} else {
-					document.getElementById("errorMessage").innerText =
-						res.data.error;
+					const doc = document.getElementById("errorMessage");
+					if (doc) {
+						doc.innerText = res.data.error;
+					} else {
+						document.getElementById("main").innerText =
+							res.data.error;
+					}
 				}
 			} else {
 				document.getElementById("errorMessage").innerText =
@@ -48,12 +79,12 @@ class Dashboard extends React.Component {
 		// Check the length of the username and password.
 		if (data.title.length < 3) {
 			document.getElementById("errorMessage").innerText =
-						"Error: Title too short.";
+				"Error: Title too short.";
 			return;
 		}
 		if (data.budget.length < 1) {
 			document.getElementById("errorMessage").innerText =
-						"Error: Budget can't be empty.";
+				"Error: Budget can't be empty.";
 			return;
 		}
 		// The basic checks we can do without the database are done,
@@ -149,7 +180,9 @@ class Dashboard extends React.Component {
 						<td>{element.title}</td>
 						<td>${element.budget}</td>
 						<td class="budgetTableBar"></td>
-						<td>{element.color}</td>
+						<td style={{ color: element.color }}>
+							{element.color}
+						</td>
 						<td>
 							<button
 								onClick={() =>
@@ -182,7 +215,11 @@ class Dashboard extends React.Component {
 							</li>
 							<li>
 								<label htmlFor="budget">Budget</label>
-								<input type="number" name="budget" id="budget" />
+								<input
+									type="number"
+									name="budget"
+									id="budget"
+								/>
 							</li>
 							<li>
 								<label htmlFor="color">Color</label>
@@ -193,10 +230,15 @@ class Dashboard extends React.Component {
 							</li>
 						</ul>
 					</div>
+
 					<div>
 						<p id="errorMessage"></p>
 					</div>
-					<div>chart</div>
+
+					<div id="pieChartHolder">
+						<h2>Pie Chart</h2>
+						<canvas id="pieChart" width="400" height="400"></canvas>
+					</div>
 				</div>
 			</main>
 		);

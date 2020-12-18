@@ -1,8 +1,6 @@
 import React from "react";
 
-import {
-	BrowserRouter as Router, Route, Switch
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import Footer from "./Footer/Footer";
 import Hero from "./Hero/Hero";
