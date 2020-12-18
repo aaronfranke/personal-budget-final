@@ -164,9 +164,10 @@ button {
 	margin: 0 10px;
 }
 
-/* Minor page-specific CSS */
+/* Page-specific CSS */
 
-#account > div {
+#account > div,
+#dashboard > div {
 	margin: 10px;
 }
 
@@ -189,4 +190,40 @@ button {
 
 #login > div > input {
 	width: 250px;
+}
+
+#budgetTableHolder {
+	width: 100%;
+}
+
+#budgetTable {
+	border-collapse: collapse;
+	margin: 0 auto;
+}
+
+.budgetTableBar {
+	width: 500px;
+}
+
+table,
+th,
+td {
+	border: 1px solid black;
+	min-width: 100px;
+}
+
+#addToBudget,
+#addToBudget > li {
+	margin: 0 6px;
+	padding: 0;
+	list-style: none;
+	display: inline-block;
+	text-align: left;
+}
+
+#addToBudget > li > label {
+	margin: 0 6px 0 0;
+	min-width: 60px;
+	text-align: right;
+	display: inline-block;
 }

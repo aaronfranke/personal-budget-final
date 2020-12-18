@@ -7,7 +7,6 @@ function deleteAccount() {
 	const data = {
 		token: reactLocalStorage.get("jwt"),
 	};
-	console.log(JSON.stringify(data));
 	axios.post("http://localhost:4000/api/delete_account", data).then((res) => {
 		if (res && res.data) {
 			if (res.data.ok === 1) {

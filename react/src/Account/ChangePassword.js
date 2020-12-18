@@ -8,7 +8,6 @@ function changePassword() {
 		token: reactLocalStorage.get("jwt"),
 		newPassword: document.getElementById("password").value,
 	};
-	console.log(JSON.stringify(data));
 	axios
 		.post("http://localhost:4000/api/change_password", data)
 		.then((res) => {

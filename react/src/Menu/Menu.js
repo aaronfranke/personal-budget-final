@@ -15,24 +15,29 @@ function Menu() {
 	];
 	if (logged_in) {
 		elements.push(
-			<li key="4">
+			<li key="2">
+				<Link itemProp="url" to="dashboard">
+					Dashboard
+				</Link>
+			</li>,
+			<li key="3">
 				<Link itemProp="url" to="account">
 					Account
 				</Link>
-			</li>
+			</li>,
 		);
 	} else {
 		elements.push(
-			<li key="2">
+			<li key="102">
 				<Link itemProp="url" to="login">
 					Login
 				</Link>
 			</li>,
-			<li key="3">
+			<li key="103">
 				<Link itemProp="url" to="signup">
 					Sign Up
 				</Link>
-			</li>
+			</li>,
 		);
 	}
 	return (

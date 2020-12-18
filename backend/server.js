@@ -37,7 +37,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post("/api/signup", (req, res) => {
 	const { username, password } = req.body;
-	//console.log(username);
 	// Check the length of the username and password.
 	if (username.length < 3) {
 		res.json({
@@ -58,7 +57,6 @@ app.post("/api/signup", (req, res) => {
 	mongoose
 		.connect(url, connectParams)
 		.then(() => {
-			console.log("Connected to the database.");
 			userModel.findOne({ username: username }, function (err, user) {
 				// Check if there was an error. If so, return that error.
 				if (err != null) {
@@ -119,11 +117,9 @@ app.post("/api/signup", (req, res) => {
 
 app.post("/api/login", (req, res) => {
 	const { username, password } = req.body;
-	console.log(username);
 	mongoose
 		.connect(url, connectParams)
 		.then(() => {
-			console.log("Connected to the database.");
 			userModel.findOne({ username: username }, function (err, user) {
 				mongoose.connection.close();
 				// Check if there was an error. If so, return that error.
@@ -172,7 +168,6 @@ function validateToken(token, res, callback) {
 		mongoose
 			.connect(url, connectParams)
 			.then(() => {
-				console.log("Connected to the database.");
 				userModel.findOne(
 					{ username: data.username },
 					function (err, user) {
@@ -213,6 +208,17 @@ app.post("/api/get_budget", (req, res) => {
 
 app.post("/api/add_to_budget", (req, res) => {
 	validateToken(req.body.token, res, (user) => {
+		for (let i = 0; i < user.budgetData.length; i++) {
+			if (req.body.title == user.budgetData[i].title) {
+				mongoose.connection.close();
+				res.json({
+					ok: 0,
+					error:
+						"There is already a budget item with the same title.",
+				});
+				return;
+			}
+		}
 		// Create new budget document.
 		const newBudget = new chartModel({
 			title: req.body.title,

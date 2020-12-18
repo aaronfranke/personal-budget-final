@@ -15,6 +15,8 @@ import SignUp from "./Account/SignUp";
 import ChangePassword from "./Account/ChangePassword";
 import DeleteAccount from "./Account/DeleteAccount";
 
+import Dashboard from "./Budget/Dashboard";
+
 function App() {
 	return (
 		<Router>
@@ -36,6 +38,9 @@ function App() {
 					</Route>
 					<Route path="/delete_account">
 						<DeleteAccount />
+					</Route>
+					<Route path="/dashboard">
+						<Dashboard />
 					</Route>
 					<Route path="/">
 						<HomePage />

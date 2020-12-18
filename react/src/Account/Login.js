@@ -7,7 +7,6 @@ function login() {
 		username: document.getElementById("username").value,
 		password: document.getElementById("password").value,
 	};
-	console.log(JSON.stringify(data));
 	axios.post("http://localhost:4000/api/login", data).then((res) => {
 		document.getElementById("password").value = "";
 		if (res && res.data) {
