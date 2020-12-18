@@ -172,7 +172,7 @@ button {
 }
 
 #account > div > button {
-	width: 200px;
+	width: 250px;
 }
 
 #login {
@@ -242,4 +242,40 @@ td {
 
 #statisticsHolder {
 	max-width: 500px;
+}
+
+main > nav {
+	width: 500px;
+	margin: 50px auto;
+	padding: 0px;
+	background-color: white;
+}
+
+main > nav > ul {
+	width: 100%;
+}
+
+main > nav > ul > li {
+	width: 30%;
+	background-color: #4d5791;
+	margin: 0 50px;
+}
+
+main > nav > ul > li:first-child {
+	display: none;
+}
+
+#homepage > p {
+	max-width: 500px;
+	margin: 16px auto;
+}
+
+#homepage > ul {
+	width: 350px;
+	margin: auto;
+}
+
+#homepage > ul > li {
+	width: 300px;
+	text-align: left;
 }

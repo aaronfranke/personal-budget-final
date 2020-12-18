@@ -248,7 +248,6 @@ app.post("/api/set_savings", (req, res) => {
 			return;
 		}
 		user.savings = savings;
-		console.log(savings);
 		// Store updated user in DB.
 		userModel
 			.updateOne({ username: user.username }, user, upsert)
@@ -338,6 +337,27 @@ app.post("/api/delete_from_budget", (req, res) => {
 				res.json({
 					ok: 1,
 					response: "Budget data deleted.",
+				});
+				return;
+			})
+			.catch((connectionError) => {
+				console.log(connectionError);
+			});
+	});
+});
+
+app.post("/api/sign_out_all", (req, res) => {
+	validateToken(req.body.token, res, (user) => {
+		user.validTime = Date.now() / 1000;
+		// Store updated user in DB.
+		userModel
+			.updateOne({ username: user.username }, user, upsert)
+			.then((data) => {
+				mongoose.connection.close();
+				// Respond to the client.
+				res.json({
+					ok: 1,
+					response: "Signed out successfully.",
 				});
 				return;
 			})
